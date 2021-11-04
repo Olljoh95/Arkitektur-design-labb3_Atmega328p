@@ -18,37 +18,30 @@ void main (void) {
 
 	DDRD &= ~(1<<PD2); //Input Switch
 	DDRD |= (1<<PD6); //Output led
-
-	uint8_t i = 0;
+	int i = 0;
 	
 	while (1) {
-		if(!(PIND & (1<<PD2))) { // Switch on pin 2 is Low,
-			PORTD &= ~(1<<PD6); //Turn led off
-			i = 1;
+		i = checkButtonState();
+		if(i == 1) {
+			printf_P(PSTR("Pushed\r\n"));
+		} else if(i == 2) {
+			printf_P(PSTR("Released\r\n"));
 		}
-		else {
-			PORTD |= (1<<PD6); //Turn led on
-			i = 2;
-		}
-		i = 0;
-		printButtonState(i);
+		
 	}
 }
 
-void printButtonState(uint8_t mode) {
-	switch(mode) {
-		case 0:
-		break;
-
-		case 1:
-		printf_P(PSTR("Pushed\r\n"));
-		break;
-
-		case 2:
-		printf_P(PSTR("Released\r\n"));
-		break;
-
+int checkButtonState() {
+	int i = 0;
+	if(!(PIND & (1<<PD2))) { // Switch on pin 2 is Low,
+		PORTD &= ~(1<<PD6); //Turn led off
+		i = 1;
 	}
-
+	else {
+		PORTD |= (1<<PD6); //Turn led on
+		i = 2;
+	}
+	return i;
+	i = 0;
 }
 
