@@ -14,8 +14,9 @@ void main (void) {
 	LED_init();
 	uart_init();
 	timer_init();
+	button_init();
 
-	DDRD &= ~(1<<PD2); //Input Switch
+	//DDRD &= ~(1<<PD2); //Input Switch
 	DDRD |= (1<<PD6); //Output led
 	int i = 0;
 	
