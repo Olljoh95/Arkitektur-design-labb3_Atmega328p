@@ -11,5 +11,5 @@ uint8_t simple_ramp() {
 	if(count == 0 || count == 255) {
 		dir *= -1;
 	}
-	return cnt += dir;
+	return count += dir;
 }

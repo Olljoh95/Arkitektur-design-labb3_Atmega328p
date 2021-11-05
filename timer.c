@@ -16,9 +16,7 @@ void timer_init() {
 
     //16000000/prescale(1024) = 15625
     //15625 * 0.010(10 milliseconds) = 156.25
-    OCR0A = 156.25;
-
-    //Start timer0 clock at 0
-    TCNT0 = 0;
+    //156.25 - 1 for correction
+    OCR0A = 157 - 1;
 }
 
