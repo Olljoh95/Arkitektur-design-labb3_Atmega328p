@@ -16,8 +16,6 @@ void main (void) {
 	timer_init();
 	button_init();
 
-	//DDRD &= ~(1<<PD2); //Input Switch
-	//DDRD |= (1<<PD6); //Output led
 	int i = 0;
 	
 	while (1) {
