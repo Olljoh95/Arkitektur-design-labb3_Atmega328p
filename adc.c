@@ -3,10 +3,9 @@
 
 #include "adc.h"
 
-volatile uint16_t ADC_val = 255;
+volatile uint8_t ADC_val = 255;
 
 void adc_init() {
-    DDRC |= (1<<DDC0); //Set Port C Data Direction Register to 1, enableing output on analog pin 0
 
     //ADC Multiplexer Selection Register
     //AVCC with external capacitor at AREF pin & ADC left adjust
@@ -50,9 +49,9 @@ void adc_init() {
 }
 
 ISR(ADC_vect) {
-    ADC_val = ADCH;
+    ADC_val = ADCH; //Save the current value of ADC into global variable
 }
 
-uint16_t get_ADC_val() {
-    return ADC_val;
+uint8_t get_ADC_val() {
+    return ADC_val; //Return ADC-value
 }

@@ -1,8 +1,8 @@
 #include <avr/io.h>
-
+#include <avr/interrupt.h>
 #include "timer.h"
 
-void timer_init0() {
+void timer0_init() {
 
     //TC0 Control Register A
     //Enable Fast PWM-mode on Timer0, Control Register A
@@ -28,8 +28,6 @@ void timer_init0() {
     TCCR0B &= ~(1<<CS02); //Third bit set to 0
     TCCR0B |= (1<<CS01) | (1<<CS00); //First and second bit set to 1
 
-    //TOP set to 255 - 1 for correction
-    OCR0A = 0xff-1;
 }
 
 void timer2_init() {
@@ -73,10 +71,7 @@ void timer2_init() {
     //------------------------------------------------
 
     //TC2 Interrupt Mask Register
-    //
-    TIMSK2 &= ~(1<<OCIEB); //3'rd bit set to 0
-    TIMSK2 |= (1<<OCIEA); //2'nd bit set to 1
-    TIMSK2 &= ~(1<<TOIE); //First bit set to 0
-    
+    TIMSK2 &= ~(1<<OCIE2B); //3'rd bit set to 0
+    TIMSK2 |= (1<<OCIE2A); //2'nd bit set to 1
+    TIMSK2 &= ~(1<<TOIE2); //First bit set to 0
 }
-

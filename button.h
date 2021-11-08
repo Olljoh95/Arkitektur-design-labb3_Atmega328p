@@ -2,7 +2,5 @@
 #define _BUTTON_H_
 
 void button_init(void);
-//void checkButtonState(void);
-
 
 #endif // _BUTTON_H_
