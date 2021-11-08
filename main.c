@@ -10,7 +10,7 @@
 #include "button.h"
 #include "adc.h"
 
-int main (void) {
+void main (void) {
 
 	LED_init();
 	uart_init();
@@ -21,7 +21,6 @@ int main (void) {
     sei();
 	
 	while (1) {} 
-    return 0;
 }
 
 ISR(TIMER2_COMPA_vect) {
