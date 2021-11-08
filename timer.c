@@ -28,9 +28,36 @@ void timer_init0() {
     TCCR0B &= ~(1<<CS02); //Third bit set to 0
     TCCR0B |= (1<<CS01) | (1<<CS00); //First and second bit set to 1
 
-    //16000000/prescale(64) = 250 000
     //TOP set to 255 - 1 for correction
+    OCR0A = 0xff-1;
+}
 
-    OCR0A = 0xff-1; 
+void timer2_init() {
+    //TC2 Control Register A
+    //Timer2 in CTC-mode
+    //Clear OCR2A on Compare Match on channel A
+    TCCR2A |= (1<<COM2A1); //8'th bit set to 1
+    TCCR2A &= ~(1<<COM2A0); //7'th bit set to 0
+    TCCR2A |= (1<<WGM21); //Second bit set to 1
+    TCCR2A &= ~(1<<WGM20); //First bit set to 0
+
+    //Channel b not used, COM2Bn bits ignored
+    //TCCR2A &= ~(1<<COM2B1);
+    //TCCR2A &= ~(1<<COM2B2);
+
+    //-----------------------------------------------
+    
+    //TC2 Control Register B
+    //Force Output Compare not used and therefore ignored
+    //TCCR2B &= ~(1<<FOC2A);
+    //TCCR2B &= ~(1<<FOC2B);
+
+    //Set prescale to 1024
+    TCCR2B &= ~(1<<WGM22); //3'rd bit set to 0
+    TCCR2B |= (1<<CS22) | (1<<CS21) | (1<<CS20); //CS2[2:0] set to 1
+    
+    
+
+    
 }
 
