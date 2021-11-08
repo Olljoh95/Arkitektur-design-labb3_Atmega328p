@@ -55,9 +55,28 @@ void timer2_init() {
     //Set prescale to 1024
     TCCR2B &= ~(1<<WGM22); //3'rd bit set to 0
     TCCR2B |= (1<<CS22) | (1<<CS21) | (1<<CS20); //CS2[2:0] set to 1
-    
-    
 
+    //-----------------------------------------------
+
+    //TCNT2 = 0; Probably redundant
+
+    //------------------------------------------------
+
+
+    //TC2 Output Compare Register A
+
+    //Prescale value: 16 000 000 / 1024 = 15625
+    //Multiply with desired time period (10ms): 15625 * 0.010 = 157.25
+    //Subtract 1 for value correction: 157-1 = 156
+    OCR2A = 156;
+
+    //------------------------------------------------
+
+    //TC2 Interrupt Mask Register
+    //
+    TIMSK2 &= ~(1<<OCIEB); //3'rd bit set to 0
+    TIMSK2 |= (1<<OCIEA); //2'nd bit set to 1
+    TIMSK2 &= ~(1<<TOIE); //First bit set to 0
     
 }
 
