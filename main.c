@@ -14,13 +14,12 @@ void main (void) {
 
 	LED_init();
 	uart_init();
-	timer_init();
+	timer_init0();
 	button_init();
+    adc_init();
 	
 	while (1) {
-		if(timer0CompareMatch()) { //If timer0 flag is enabled
-			checkButtonState();	 //
-		}
+        checkButtonState();
 	}
 }
 

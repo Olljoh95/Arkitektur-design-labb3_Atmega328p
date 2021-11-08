@@ -3,6 +3,7 @@
 
 #include "adc.h"
 
+volatile uint16_t ADC_val = 255;
 
 void adc_init() {
     DDRC |= (1<<DDC0); //Set Port C Data Direction Register to 1, enableing output on analog pin 0
@@ -46,6 +47,12 @@ void adc_init() {
 
     ADCSRB &= ~(1<<ADTS2); //Third bit set to 0
     ADCSRB |= (1<<ADTS1) | (1<<ADTS0); //Second and first bit set to 1
+}
 
+ISR(ADC_vect) {
+    ADC_val = ADCH;
+}
 
+uint16_t get_ADC_val() {
+    return ADC_val;
 }
