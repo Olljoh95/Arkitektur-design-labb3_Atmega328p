@@ -20,7 +20,8 @@ int main (void) {
     adc_init();
     sei();
 	
-	while (1) {}
+	while (1) {} 
+    return 0;
 }
 
 ISR(TIMER2_COMPA_vect) {
