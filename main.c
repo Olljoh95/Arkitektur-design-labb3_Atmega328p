@@ -8,6 +8,7 @@
 #include "serial.h"
 #include "timer.h"
 #include "button.h"
+#include "adc.h"
 
 void main (void) {
 
@@ -15,13 +16,10 @@ void main (void) {
 	uart_init();
 	timer_init();
 	button_init();
-	//PORTD |= (1<<PD6); //Turn led on
 	
 	while (1) {
-		PORTD |= (1<<PD6); //Turn led on
-		if((TIFR0 &(1<<OCF0A))) { //If timer0 flag is enabled
+		if(timer0CompareMatch()) { //If timer0 flag is enabled
 			checkButtonState();	 //
-			TIFR0 |= (1<<OCF0A); //Enable OCF0A Flag to reset
 		}
 	}
 }
@@ -30,52 +28,21 @@ void checkButtonState() {
     static uint8_t currentState = 0; //placeholder for button state
     static uint8_t prevState = 0; 	//placeholder for previous button state
 
-    if(PINB & (1<<PORTB4)) { //
+    if(PINB & (1<<PORTB4)) {
         currentState = 1;
+		PORTD |= (1<<PD6); //Turn led on
     }
 	else if(!(PINB & (1<<PORTB4))) {
         currentState = 0;
+		PORTD &= ~(1<<PD6); //turn led off;
     }
 
     if(currentState == 1 && prevState == 0) {
         printf_P(PSTR("Pushed\r\n"));
+		
+
     } else if(currentState == 0 && prevState == 1){
         printf_P(PSTR("Released\r\n"));
     }
     prevState = currentState;
 }
-
-
-/*
-if(!(PIND & (1<<PD2))) { // Switch on pin 2 is Low,
-	PORTD &= ~(1<<PD6); //Turn led off
-}else {
-PORTD |= (1<<PD6); //Turn led on
-OCR0A = simple_ramp();
-}
-*/
-
-/*
-i = checkButtonState();
-if(i == 1) {
-	printf_P(PSTR("Pushed\r\n"));
-} else if(i == 2) {
-printf_P(PSTR("Released\r\n"));
-}
-*/
-
-/*
-int checkButtonState() {
-	int i = 0;
-	if(!(PIND & (1<<PD2))) { // Switch on pin 2 is Low,
-		PORTD &= ~(1<<PD6); //Turn led off
-		i = 1;
-	}
-	else {
-		PORTD |= (1<<PD6); //Turn led on
-		i = 2;
-	}
-	return i;
-	i = 0;
-}
-*/

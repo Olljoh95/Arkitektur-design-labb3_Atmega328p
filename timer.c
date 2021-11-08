@@ -20,3 +20,11 @@ void timer_init() {
     OCR0A = 157 - 1;
 }
 
+uint8_t timer0CompareMatch() {
+    if((TIFR0 &(1<<OCF0A))) {
+        return 1;
+        TIFR0 |= (1<<OCF0A); //Clear flag
+    }
+    return 0;
+}
+
