@@ -27,7 +27,7 @@ void adc_init() {
 
     //ADC Control and Status Register A
     //Enable ADC(ADEN), Enable Interrputs(ADIE), Set prescale to 8(APS[2:0])
-    ADCSRA |= (1<<ADEN); //7'th bit set to 1
+    ADCSRA |= (1<<ADEN); //8'th bit set to 1
     //ADCSRA |= (1<<ADSC); Start Conversion, regulates start of conversion
     //ADCSRA |= (1<<ADATE); Auto trigger
     //ADCSRA |= (1<<ADIF); Interrupt flag, is set when a conversion is complete
@@ -42,10 +42,10 @@ void adc_init() {
     */
 
     //ADC Control and Status Register B
-    //In this case this register will be used to set to Timer/Counter1 Compare Match B (ADTS[2:0] = 101)
+    //In this case this register will be used to set to Timer/Counter0 Compare Match A (ADTS[2:0] = 011)
 
-    ADCSRB &= ~(1<<ADTS1); //Second bit set to 0
-    ADCSRB |= (1<<ADTS2) | (1<<ADTS0); //Third and first bit set to 1
+    ADCSRB &= ~(1<<ADTS2); //Third bit set to 0
+    ADCSRB |= (1<<ADTS1) | (1<<ADTS0); //Second and first bit set to 1
 
 
 }
